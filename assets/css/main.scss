@@ -1,0 +1,18 @@
+@import "./normalize";
+@import "./fonts";
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 8px;
+
+  @media screen and (min-width: 1280px) {
+    padding: 8px 91px;
+  }
+}
+
+body {
+  font-family: "IBM Plex Sans", sans-serif;
+  background: #f4f4f4;
+  overflow-x: hidden;
+}
