@@ -19,16 +19,23 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   // plugins: [],
-  plugins: ["@/plugins/carbon.js"],
+  plugins: ["@/plugins/carbon.js", "@/plugins/vuelidate.js"],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  // components: true,
+  components: [
+    "~/components",
+    "~/components/shared/",
+    { path: "~/components/VRadioGroup/", prefix: "VRadioGroup" },
+    { path: "~/components/VButton/", prefix: "VButton" },
+    { path: "~/components/VProgress/", prefix: "VProgress" },
+  ],
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ["@nuxtjs/axios", "@nuxtjs/auth-next"],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

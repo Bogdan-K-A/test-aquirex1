@@ -1,16 +1,15 @@
 <!-- Please remove this file from your project -->
 <template lang="pug">
 main.registration-page
-  //- LegalEntity
-  //- VEntepreneur
+
   LegalEntity(v-if="currentForm")
-  VEntepreneur(v-if="!currentForm")
+  VEntepreneur(v-else)
   
   img(src="@/assets/svg/logo.svg", alt="").registration-page__logo
   .registration-page__img-wrapper
     img(src="@/assets/img/Group-33922.png", alt="").registration-page__img
   .registration-page__wrapper-btn
-    a(href="https://www.instagram.com/nailspot.kyiv").registration-page__btn-login Sign in
+    a(to="/").registration-page__btn-login Sign in
     
 </template>
 
@@ -37,7 +36,7 @@ export default {
 
   &__img {
     width: 353px;
-    height: 100vh;
+    /* height: 100vh; */
   }
 
   &__logo {
@@ -61,6 +60,7 @@ export default {
 
     color: #0ba39a;
     border-bottom: 1px solid #0ba39a;
+    cursor: pointer;
   }
 }
 /* .registration-page-container {

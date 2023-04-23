@@ -2,25 +2,19 @@
   <div class="radio-group">
     <p class="radio-group__text">Why are you?</p>
     <cv-radio-group class="radio-group__list-btn" id="step1">
-      <!-- :vertical="vertical" -->
       <cv-radio-button
         @click="handkeChecked"
-        name="group-1"
+        id="Entepreneur"
         label="Entepreneur"
         value="Entepreneur"
       />
-      <!-- :hide-label="hideLabel"
-        :label-left="labelLeft" -->
 
       <cv-radio-button
-        @click="handkeChecked"
         :checked="checked1"
-        name="group-1"
+        id="Legal entity"
         label="Legal entity"
         value="Legal entity"
       />
-      <!-- :hide-label="hideLabel"
-        :label-left="labelLeft" -->
     </cv-radio-group>
   </div>
 </template>
@@ -31,18 +25,13 @@ export default {
   data() {
     return {
       checked1: true,
-      // hideLabel: false,
-      // labelLeft: false,
-      // vertical: false,
     };
   },
-  // checked1: this.$store.state.store.currentRadioBtn,
+
   methods: {
     // меняю состояние в глобальном стейте по условию
     handkeChecked(e) {
       this.$store.commit("store/checkedState", e.currentTarget.value);
-
-      // console.log(this.$store.state.store.currentRadioBtn);
     },
   },
 };
@@ -50,9 +39,9 @@ export default {
 
 <style lang="scss" scoped>
 .radio-group {
-  &__list-btn {
+  /* &__list-btn {
     margin-bottom: 64px;
-  }
+  } */
 
   &__text {
     font-size: 12px;
