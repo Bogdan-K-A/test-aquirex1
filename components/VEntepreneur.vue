@@ -24,13 +24,21 @@
   
   cv-form( v-show="step === 2" @submit.prevent="onSubmit" novalidate).form
     div
-      cv-text-input(
-        :class="{'is-error': $v.formEntepreneur.firstName.$error}"
-        @blur="$v.formEntepreneur.firstName.$touch()"
-        v-model='formEntepreneur.firstName'
-        id="firstName"
-        label="First name"
-        placeholder="First name")
+      //- див зделал специально для текста ошибки
+      div
+          //- динамический клас не получается повесит на бордер инпута, вешается только на внешний див.
+        cv-text-input(
+          :class="{'is-error': $v.formEntepreneur.firstName.$error}"
+          @blur="$v.formEntepreneur.firstName.$touch()"
+          v-model='formEntepreneur.firstName'
+          id="firstName"
+          label="First name"
+          placeholder="First name")
+        //- текст ошибки под инпутом вставляю на уровень дива, не исчезает по условию вставляю в див пробадает и не появляется
+      .invalid-fitback(v-if="!$v.formEntepreneur.firstName.$required") Required field
+
+
+
       cv-text-input( label="E-mail" placeholder="E-mail" v-model='formEntepreneur.email' :class="{'is-error': $v.formEntepreneur.email.$error}"
         @blur="$v.formEntepreneur.email.$touch()")
       cv-text-input( :class="{'is-error': $v.formEntepreneur.password.$error}"
@@ -182,5 +190,8 @@ export default {
 
 .is-error {
   border: 1px solid red;
+}
+.invalid-fitback {
+  color: red;
 }
 </style>
