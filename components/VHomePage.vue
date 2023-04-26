@@ -29,6 +29,7 @@ export default {
   position: relative;
   display: flex;
   justify-content: space-between;
+  background: #f4f4f4;
 
   &__img-wrapper {
     position: relative;
@@ -48,12 +49,6 @@ export default {
     z-index: 9;
   }
 
-  /* &__wrapper-btn { */
-  /* width: 100px; */
-  /* margin: 24px 64px 0 0; */
-  /* height: 25px; */
-  /* } */
-
   &__btn-login {
     display: inline-block;
     margin: 24px 64px 0 0;
@@ -63,17 +58,4 @@ export default {
     cursor: pointer;
   }
 }
-/* .registration-page-container {
-  position: absolute;
-  top: calc(50% - 346px / 2);
-  left: calc(50% - 512px / 2);
-
-  
-  width: 512px;
-  height: 346px;
-
-  &__title {
-    margin-bottom: 32px;
-  }
-} */
 </style>

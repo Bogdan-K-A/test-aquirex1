@@ -39,9 +39,9 @@ export default {
 
 <style lang="scss" scoped>
 .radio-group {
-  /* &__list-btn {
-    margin-bottom: 64px;
-  } */
+  &__list-btn {
+    margin-bottom: 32px;
+  }
 
   &__text {
     font-size: 12px;

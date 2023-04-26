@@ -1,5 +1,7 @@
 <template lang="pug">
-.registration-page-container 
+.registration-page-container
+  
+  notifications( classes="vue-notification")
   p(v-show="step === 2" type="button" @click="backStep" ).back Back
   h1.registration-page-container__title Sign up
   VProgress(:steps="progress")
@@ -22,45 +24,61 @@
        
   
   
-  cv-form( v-show="step === 2" @submit.prevent="onSubmit" novalidate).form
+  form( v-show="step === 2" @submit.prevent="handleSubmit" ).form
     div
-      //- див зделал специально для текста ошибки
-      div
-        //- динамический клас не получается повесит на бордер инпута, вешается только на внешний див.
-        cv-text-input(
-          :class="{'is-error': $v.formEntepreneur.firstName.$error}"
-          @blur="$v.formEntepreneur.firstName.$touch()"
-          v-model='formEntepreneur.firstName'
-          id="firstName"
-          label="First name"
-          placeholder="First name")
-      //- текст ошибки под инпутом вставляю на уровень дива, не исчезает по условию вставляю в див пробадает и не появляется
-      .invalid-fitback(v-if="!$v.formEntepreneur.firstName.$required") Required field
-
-
-
-      cv-text-input( label="E-mail" placeholder="E-mail" v-model='formEntepreneur.email' :class="{'is-error': $v.formEntepreneur.email.$error}"
-        @blur="$v.formEntepreneur.email.$touch()")
-      cv-text-input( :class="{'is-error': $v.formEntepreneur.password.$error}"
-        @blur="$v.formEntepreneur.password.$touch()" label="Password" placeholder="Password" type="password" v-model='formEntepreneur.password')
-      VButton( type="submit") Submit
-   
+      VInput(
+        v-bind="formData.firstName"
+        v-model="$v.formEntepreneur.firstName.$model"
+        @input='onFieldInput'
+        @blur='onFieldBlur'
+        @focus="onFieldFocus"
+        :isError="$v.formEntepreneur.firstName.$error"
+        )
+      
+      VInput(
+        v-bind="formData.email"
+        v-model="$v.formEntepreneur.email.$model"
+        @input='onFieldInput'
+        @blur='onFieldBlur'
+        @focus="onFieldFocus"
+        :isError="$v.formEntepreneur.email.$error"
+        )
+      VInput(
+        v-bind="formData.password"
+        v-model="$v.formEntepreneur.password.$model"
+        @input='onFieldInput'
+        @blur='onFieldBlur'
+        @focus="onFieldFocus"
+        :isError="$v.formEntepreneur.password.$error"
+        )
+      VButton( type="submit") Registration
+    
     div
-      cv-text-input( :class="{'is-error': $v.formEntepreneur.lastName.$error}"
-        @blur="$v.formEntepreneur.lastName.$touch()" label="Last name" placeholder="Last name" v-model='formEntepreneur.lastName')
-      cv-text-input( 
-        :class="{'is-error': $v.formEntepreneur.phone.$error}"
-        @blur="$v.formEntepreneur.phone.$touch()"
-        v-model='formEntepreneur.phone'
-        label="Phone nuber"
-        placeholder="Phone nuber")
-      cv-text-input(
-        :class="{'is-error': $v.formEntepreneur.confirmPassword.$error}"
-        @blur="$v.formEntepreneur.confirmPassword.$touch()"
-        v-model='formEntepreneur.confirmPassword'
-        label="Confirm password"
-        placeholder="Confirm password"
-        type="password")
+      VInput(
+        v-bind="formData.lastName"
+        v-model="$v.formEntepreneur.lastName.$model"
+        @input='onFieldInput'
+        @blur='onFieldBlur'
+        @focus="onFieldFocus"
+        :isError="$v.formEntepreneur.lastName.$error"
+        )
+      VInput(
+        v-bind="formData.phone"
+        v-model="$v.formEntepreneur.phone.$model"
+        @input='onFieldInput'
+        @blur='onFieldBlur'
+        @focus="onFieldFocus"
+        :isError="$v.formEntepreneur.phone.$error"
+        )
+      VInput(
+        v-bind="formData.confirmPassword"
+        v-model="$v.formEntepreneur.confirmPassword.$model"
+        @input='onFieldInput'
+        @blur='onFieldBlur'
+        @focus="onFieldFocus"
+        :isError="$v.formEntepreneur.confirmPassword.$error"
+        )
+  
       
   
 
@@ -72,14 +90,101 @@
 import { required } from "vuelidate/lib/validators";
 
 export default {
+  methods: {
+    // функция на отслеживания фокуса
+    onFieldFocus(field) {
+      console.log("Инпут в фокусе");
+    },
+
+    // валидация при потере фокуса
+    onFieldBlur(field) {
+      console.log("Потерял фокус");
+
+      if (field.value.length === 0) {
+        this.$notify({
+          type: "error",
+          title: "Ёпта ошибка!!!",
+          text: "Вы должны заполнить все поля",
+        });
+      }
+    },
+
+    onFieldInput(field, target) {
+      // console.log("target: ", target);
+      // console.log("field: ", field);
+    },
+
+    // очистка формы
+    resetV() {
+      this.formEntepreneur.firstName = "";
+      this.formEntepreneur.email = "";
+      this.formEntepreneur.password = "";
+      this.formEntepreneur.lastName = "";
+      this.formEntepreneur.phone = "";
+      this.formEntepreneur.confirmPassword = "";
+    },
+
+    // отправка формы
+    handleSubmit() {
+      this.$v.formEntepreneur.$touch();
+
+      if (this.$v.formEntepreneur.$invalid) {
+        console.log("Дела хуйня, не все поля заполнил");
+
+        this.$notify({
+          type: "error",
+          title: "Ёпта ошибка!!!",
+          text: "Вы должны заполнить все поля",
+        });
+        return false;
+      } else {
+        this.$notify({
+          type: "success",
+          title: "Поздравляем!!!",
+          text: "Регистрация прошла успешно",
+        });
+        console.log("Регистрация прошла успешно");
+        // console.log(this.formEntepreneur.firstName);
+        // console.log(this.formEntepreneur);
+      }
+    },
+
+    // выбор формы radioButton
+    handkeChecked(e) {
+      this.$store.commit("store/checkedState", e.currentTarget.value);
+    },
+    // шаг вперёд
+    nextStep() {
+      if (this.step < 2) {
+        this.step++;
+      }
+
+      if (this.step === 2) {
+        this.progress.initialStep = 1;
+      }
+    },
+    // шаг назад
+    backStep() {
+      if (this.step > 1) {
+        this.step--;
+      }
+
+      if (this.step === 1) {
+        this.progress.initialStep = 0;
+      }
+    },
+  },
+
   data() {
     return {
+      isInvalid: false,
       checked2: true,
       step: 1,
       progress: {
         initialStep: 0,
         steps: ["Step 1", "Step 2 "],
       },
+      // состояние форми
       formEntepreneur: {
         firstName: "",
         email: "",
@@ -88,9 +193,56 @@ export default {
         phone: "",
         confirmPassword: "",
       },
+
+      // заполнение заголовков,плейсхолдеров...
+      formData: {
+        firstName: {
+          name: "firstName",
+          title: "First Name",
+          placeholder: "Your first name",
+          type: "text",
+          required: "Required field",
+        },
+        email: {
+          name: "email",
+          title: "E-mail",
+          placeholder: "Your email",
+          type: "text",
+          required: "Required field",
+        },
+        password: {
+          name: "password",
+          title: "Password",
+          placeholder: "Your password",
+          type: "password",
+          required: "Required field",
+        },
+        lastName: {
+          name: "lastName",
+          title: "Last Name",
+          placeholder: "Your last name",
+          type: "text",
+          required: "Required field",
+        },
+        phone: {
+          name: "phone",
+          title: "Phone",
+          placeholder: "Your phone",
+          type: "text",
+          required: "Required field",
+        },
+        confirmPassword: {
+          name: "confirmPassword",
+          title: "Confirm Password",
+          placeholder: "Your confirm password",
+          type: "password",
+          required: "Required field",
+        },
+      },
     };
   },
 
+  // библиотечный метод валидации
   validations: {
     formEntepreneur: {
       firstName: {
@@ -113,37 +265,6 @@ export default {
       },
     },
   },
-
-  methods: {
-    onSubmit() {
-      console.log("Регистрация прошла успешно");
-      console.log(this.formEntepreneur.firstName);
-    },
-
-    handkeChecked(e) {
-      this.$store.commit("store/checkedState", e.currentTarget.value);
-    },
-
-    nextStep() {
-      if (this.step < 2) {
-        this.step++;
-      }
-
-      if (this.step === 2) {
-        this.progress.initialStep = 1;
-      }
-    },
-
-    backStep() {
-      if (this.step > 1) {
-        this.step--;
-      }
-
-      if (this.step === 1) {
-        this.progress.initialStep = 0;
-      }
-    },
-  },
 };
 </script>
 
@@ -153,8 +274,8 @@ export default {
   top: calc(50% - 346px / 2);
   left: calc(50% - 512px / 2);
 
-  width: 512px;
-  height: 346px;
+  /* width: 512px;
+  height: 346px; */
 
   &__title {
     margin-bottom: 32px;
@@ -166,9 +287,9 @@ export default {
 }
 
 .radio-group {
-  /* &__list-btn {
-    margin-bottom: 64px;
-  } */
+  &__list-btn {
+    margin-bottom: 32px;
+  }
 
   &__text {
     font-size: 12px;
@@ -184,13 +305,10 @@ export default {
   justify-content: space-between;
   width: 670px;
 }
-.cv-text-input {
+/* .cv-text-input {
   width: 318px;
-}
+} */
 
-.is-error {
-  border: 1px solid red;
-}
 .invalid-fitback {
   color: red;
 }

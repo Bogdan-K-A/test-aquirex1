@@ -19,7 +19,7 @@ export default {
 <style lang="scss" scoped>
 .btn {
   padding: 15px 58px;
-  margin-top: 64px;
+  margin-top: 32px;
 
   background: #0ba39a;
   color: white;
