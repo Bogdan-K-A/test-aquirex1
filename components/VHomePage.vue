@@ -2,23 +2,42 @@
 <template lang="pug">
 main.registration-page
 
-  LegalEntity(v-if="currentForm")
-  VEntepreneur(v-else)
+  div(v-if="loginForm")
+    VLogin
+  div(v-else)
+    LegalEntity(v-if="currentForm")
+    VEntepreneur(v-else)
   
   img(src="@/assets/svg/logo.svg", alt="").registration-page__logo
   .registration-page__img-wrapper
     img(src="@/assets/img/Group-33922.png", alt="").registration-page__img
   .registration-page__wrapper-btn
-    a(to="/").registration-page__btn-login Sign in
+    button(@click="onShowLoginForm").registration-page__btn-login {{loginForm ? 'Sign up':'Sign in'}}
     
 </template>
 
 <script>
 export default {
   name: "VHomePage",
+  data() {
+    return {
+      loginForm: false,
+    };
+  },
   computed: {
     currentForm() {
       return this.$store.state.store.currentRadioBtn;
+    },
+  },
+
+  methods: {
+    onShowLoginForm() {
+      console.log("click");
+      if (!this.loginForm) {
+        this.loginForm = true;
+      } else {
+        this.loginForm = false;
+      }
     },
   },
 };
@@ -28,7 +47,7 @@ export default {
 .registration-page {
   position: relative;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   background: #f4f4f4;
 
   &__img-wrapper {
@@ -37,7 +56,7 @@ export default {
 
   &__img {
     width: 353px;
-    /* height: 100vh; */
+    height: 100vh;
   }
 
   &__logo {
@@ -50,12 +69,15 @@ export default {
   }
 
   &__btn-login {
-    display: inline-block;
+    /* display: inline-block; */
     margin: 24px 64px 0 0;
 
     color: #0ba39a;
     border-bottom: 1px solid #0ba39a;
     cursor: pointer;
+  }
+  &__wrapper-btn {
+    margin-left: auto;
   }
 }
 </style>

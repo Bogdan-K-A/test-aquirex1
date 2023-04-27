@@ -125,7 +125,15 @@ export default {
     },
 
     // отправка формы
-    handleSubmit() {
+    async handleSubmit() {
+      try {
+        let response = await this.$auth.loginWith("local", {
+          data: this.formEntepreneur,
+        });
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
       this.$v.formEntepreneur.$touch();
 
       if (this.$v.formEntepreneur.$invalid) {
