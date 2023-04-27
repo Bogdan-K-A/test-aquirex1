@@ -18,6 +18,19 @@
 import { required } from "vuelidate/lib/validators";
 
 export default {
+  methods: {
+    async handleSubmit() {
+      try {
+        let response = await this.$auth.loginWith("local", {
+          data: this.formEntepreneur,
+        });
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+  },
+
   data() {
     return {
       loginForm: {

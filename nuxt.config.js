@@ -22,6 +22,7 @@ export default {
   plugins: [
     "@/plugins/carbon.js",
     "@/plugins/vuelidate.js",
+    "@/plugins/carbon-icons.js",
     { src: "~/plugins/notifications-ssr", ssr: true },
     { src: "~/plugins/notifications-client", ssr: false },
   ],
@@ -41,27 +42,14 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ["@nuxtjs/axios", "@nuxtjs/auth-next"],
-  // auth: {
-  //   strategies: {
-  //     local: {
-  //       token: {
-  //         property: "token",
-  //         global: true,
-  //         // required: true,
-  //         // type: 'Bearer'
-  //       },
-  //       user: {
-  //         property: "user",
-  //         // autoFetch: true
-  //       },
-  //       endpoints: {
-  //         login: { url: "/api/auth/login", method: "post" },
-  //         logout: { url: "/api/auth/logout", method: "post" },
-  //         user: { url: "/api/auth/user", method: "get" },
-  //       },
-  //     },
-  //   },
-  // },
+  auth: {
+    cookie: {
+      prefix: "auth.",
+      options: {
+        path: "/",
+      },
+    },
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
