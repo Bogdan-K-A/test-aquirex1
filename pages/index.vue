@@ -1,11 +1,14 @@
-<template lang="pug">
-VHomePage
- </template>
+  <template lang="pug">
+    VRegistration  
+    
+  </template>
 
-<script>
-import Vue from "vue";
+  <script>
+  import Vue from "vue";
 
-export default Vue.extend({
-  name: "IndexPage",
-});
+  export default Vue.extend({
+    name: "IndexPage",
+  
+    
+  });
 

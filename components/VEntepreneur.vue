@@ -93,12 +93,12 @@ export default {
   methods: {
     // функция на отслеживания фокуса
     onFieldFocus(field) {
-      console.log("Инпут в фокусе");
+      // console.log("Инпут в фокусе");
     },
 
     // валидация при потере фокуса
     onFieldBlur(field) {
-      console.log("Потерял фокус");
+      // console.log("Потерял фокус");
 
       if (field.value.length === 0) {
         this.$notify({
@@ -125,15 +125,28 @@ export default {
     },
 
     // отправка формы
-    async handleSubmit() {
-      try {
-        let response = await this.$auth.loginWith("local", {
-          data: this.formEntepreneur,
-        });
-        console.log(response);
-      } catch (err) {
-        console.log(err);
-      }
+    handleSubmit() {
+      // регистрация
+      // try {
+
+      //   await this.$auth.loginWith("local", {
+      //     data: {
+      //       email: this.formEntepreneur.email,
+      //       password: this.formEntepreneur.password,
+      //     },
+      //   });
+
+      //   this.$router.push("/profile");
+      // } catch (e) {
+      //   console.error(e);
+      //   this.$notify({
+      //     type: "error",
+      //     title: "Ёпта ошибка!!!",
+      //     text: "Что-то пошло не так",
+      //   });
+      // }
+
+      // валидация
       this.$v.formEntepreneur.$touch();
 
       if (this.$v.formEntepreneur.$invalid) {

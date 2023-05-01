@@ -4,7 +4,7 @@
     <cv-header aria-label="Carbon header">
       <cv-breadcrumb>
         <cv-breadcrumb-item>
-          <cv-link href="#somewhere">Dashboard</cv-link>
+          <cv-link to="/">Dashboard</cv-link>
         </cv-breadcrumb-item>
         <cv-breadcrumb-item>
           <p>Settings</p>
@@ -14,14 +14,12 @@
       <template v-slot:header-global>
         <cv-header-global-action
           aria-label="User avatar"
-          @click="actionUserAvatar"
           aria-controls="user-panel"
           label="Log in"
           tipPosition="bottom"
           tipAlignment="center"
         >
-          <UserAvatar20 v-if="loggedIn" />
-          <Login20 v-else />
+          <UserAvatar20 />
         </cv-header-global-action>
       </template>
       <template v-slot:left-panels>
@@ -30,6 +28,9 @@
             <template v-slot:nav-icon></template> -->
           <!-- <cv-side-nav-menu-item active> L2 menu item </cv-side-nav-menu-item> -->
           <!-- </cv-side-nav-items> -->
+          <a class="logout-btn" @click.prevent="logout" href="#">
+            <Login20 class="logout-svg-btn" />
+          </a>
         </cv-side-nav>
       </template>
 
@@ -43,15 +44,22 @@
 
 <script>
 export default {
-  data() {
-    return {
-      loggedIn: false,
-    };
-  },
+  layout: "privat",
+  middleware: "auth",
+  // data() {
+  //   return {
+  //     loggedIn: false,
+  //   };
+  // },
 
   methods: {
-    actionUserAvatar() {
-      this.loggedIn = !this.loggedIn;
+    // actionUserAvatar() {
+    //   this.loggedIn = !this.loggedIn;
+    // },
+
+    logout() {
+      this.$store.dispatch("logout");
+      console.log("object");
     },
   },
 };
@@ -109,5 +117,16 @@ export default {
 .bx--btn.bx--btn--icon-only.bx--tooltip__trigger:hover,
 .bx--btn.bx--btn--icon-only.bx--tooltip__trigger:focus {
   background: none;
+}
+.logout-btn {
+  margin-bottom: 100px;
+}
+.logout-svg-btn {
+  fill: beige !important;
+}
+
+.bx--side-nav__navigation {
+  justify-content: flex-end;
+  /* height: 100vh; */
 }
 </style>

@@ -41,16 +41,48 @@ export default {
   buildModules: [],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/axios", "@nuxtjs/auth-next"],
-  auth: {
-    cookie: {
-      prefix: "auth.",
-      options: {
-        path: "/",
-      },
-    },
+  modules: ["@nuxtjs/axios", "@nuxtjs/auth"],
+
+  axios: {
+    baseURL: "http://localhost:3000/api",
   },
 
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: "token",
+          global: true,
+          // required: true,
+          // type: 'Bearer'
+        },
+        user: {
+          property: "user",
+          // autoFetch: true
+        },
+        endpoints: {
+          login: {
+            url: "/session",
+            method: "post",
+            propertyName: "token",
+          },
+          logout: { url: "/api/auth/logout", method: "post" },
+          user: { url: "/api/auth/user", method: "get", propertyName: "user" },
+        },
+
+        // tokenType: "Bearer",
+      },
+    },
+    // redirect: {
+    //   login: "/login",
+    //   logout: "/",
+    //   home: "/profile",
+    // },
+  },
+
+  router: {
+    middleware: ["auth"],
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 };

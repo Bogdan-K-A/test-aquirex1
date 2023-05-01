@@ -4,9 +4,9 @@
     form( @submit.prevent="handleSubmit" ).form
         div
             VInput(
-                v-bind="formData.login"
-                v-model="$v.loginForm.login.$model"        
-                :isError="$v.loginForm.login.$error")
+                v-bind="formData.email"
+                v-model="$v.loginForm.email.$model"        
+                :isError="$v.loginForm.email.$error")
             VInput(
                 v-bind="formData.password"
                 v-model="$v.loginForm.password.$model"        
@@ -18,30 +18,40 @@
 import { required } from "vuelidate/lib/validators";
 
 export default {
+  name: "VLogin",
+
   methods: {
-    async handleSubmit() {
-      try {
-        let response = await this.$auth.loginWith("local", {
-          data: this.formEntepreneur,
-        });
-        console.log(response);
-      } catch (err) {
-        console.log(err);
-      }
+    handleSubmit() {
+      console.log(this.loginForm);
+      this.$auth.loginWith("local", {
+        data: this.loginForm,
+      });
+
+      // try {
+      //   await this.$auth.loginWith("local", {
+      //     data: this.loginForm,
+      //   });
+      //   const token = this.$auth.getToken("local");
+      //   console.log("Token:", token);
+      //   // this.$router.push("/profile");
+      // } catch (err) {
+      //   console.log(err);
+      // }
     },
   },
 
   data() {
     return {
+      auth: false,
       loginForm: {
-        login: "",
-        password: "",
+        email: "test@mail.com",
+        password: "qwerty1",
       },
       formData: {
-        login: {
-          name: "login",
-          title: "Login",
-          placeholder: "Your Login",
+        email: {
+          name: "email",
+          title: "E-mail",
+          placeholder: "Your email",
           type: "text",
           required: "Required field",
         },
@@ -58,7 +68,7 @@ export default {
 
   validations: {
     loginForm: {
-      login: {
+      email: {
         required,
       },
 

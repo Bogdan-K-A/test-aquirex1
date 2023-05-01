@@ -1,43 +1,17 @@
-<!-- Please remove this file from your project -->
 <template lang="pug">
-main.registration-page
-
-  div(v-if="loginForm")
-    VLogin
-  div(v-else)
-    LegalEntity(v-if="currentForm")
-    VEntepreneur(v-else)
-  
-  img(src="@/assets/svg/logo.svg", alt="").registration-page__logo
-  .registration-page__img-wrapper
-    img(src="@/assets/img/Group-33922.png", alt="").registration-page__img
-  .registration-page__wrapper-btn
-    button(@click="onShowLoginForm").registration-page__btn-login {{loginForm ? 'Sign up':'Sign in'}}
-    
+section
+  LegalEntity(v-if="currentForm")
+  VEntepreneur(v-else)
 </template>
 
 <script>
 export default {
-  name: "VHomePage",
-  data() {
-    return {
-      loginForm: false,
-    };
-  },
+  name: "VRegistration",
+  auth: "guest",
+
   computed: {
     currentForm() {
       return this.$store.state.store.currentRadioBtn;
-    },
-  },
-
-  methods: {
-    onShowLoginForm() {
-      console.log("click");
-      if (!this.loginForm) {
-        this.loginForm = true;
-      } else {
-        this.loginForm = false;
-      }
     },
   },
 };
